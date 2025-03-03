@@ -1,8 +1,13 @@
-# React + Vite
+This is an assignment for a course.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+See the figma skiss here: https://www.figma.com/design/RdHOwEzElFGXdDUcDp0nkY/Yum-Yum-Gimme-sum---frontend?node-id=1-192&t=nbelLSls0rsLsl0E-0
 
-Currently, two official plugins are available:
+#Note: 
+- The .env file is not ignored because the api key is not a secret this time.
+- So far it's only designed mobile
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+#TODO:
+
+- Refactor and redesign the code
+- Make responsive
+- Make accessible

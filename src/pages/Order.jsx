@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { setOrderId, setEta } from "../store/orderSlice";
 import { useNavigate } from "react-router-dom";
+import "./pages.css";
 
 function Order() {
   const cart = useSelector((state) => state.order.cart);
@@ -18,7 +19,7 @@ function Order() {
       items: cart.map((item) => item.id),
     };
 
-// createOrder does not work and I couldn't figure out why
+    // createOrder does not work and I couldn't figure out why
     try {
       const rawResponse = await fetch(
         `https://fdnzawlcf6.execute-api.eu-north-1.amazonaws.com/${tenant}/orders`,
@@ -38,32 +39,56 @@ function Order() {
 
       if (!orderId) {
         console.error("Order-ID saknas i API-svaret!");
-        return; 
+        return;
       }
 
       dispatch(setOrderId(orderId));
-      dispatch(setEta(eta)); 
+      dispatch(setEta(eta));
       navigate("/eta");
     } catch (error) {
       console.error("Något gick fel vid beställning:", error);
     }
   };
 
+  const handleCloseCart = () => {
+    navigate("/menu");
+  };
+
+  const totalSum = cart.reduce((total, item) => total + item.price, 0);
+
   return (
-    <div>
-      <h1>Din Order</h1>
-      {cart.length === 0 ? (
-        <p>Din varukorg är tom.</p>
-      ) : (
-        <ul>
-          {cart.map((item) => (
-            <li key={item.id}>
-              {item.name} - {item.price} kr
-            </li>
-          ))}
-        </ul>
-      )}
-      <button onClick={handleSubmitOrder}>Beställ</button>
+    <div className="order-page-body">
+      <div className="cart-container">
+        <button className="cart-button" onClick={handleCloseCart}>
+          <img src="assets/cart.png" />
+        </button>
+      </div>
+      <div className="order-content">
+        {cart.length === 0 ? (
+          <p>Din varukorg är tom.</p>
+        ) : (
+          <ul>
+            {cart.map((item) => (
+              <li key={item.id}>
+                <div className="list-top">
+                  <h3>{item.name}</h3>
+                  <div className="dots-dark" />
+                  <h3>{item.price} sek</h3>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+        <div className="order-bottom-content">
+          <div className="total-content">
+            <h3>TOTALT</h3>
+            <h3 className="sum">{totalSum} SEK</h3>
+          </div>
+          <button className="order-button" onClick={handleSubmitOrder}>
+            TAKE MY MONEY!
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

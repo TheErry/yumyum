@@ -40,23 +40,36 @@ const Receipt = () => {
   };
 
   return (
-    <div>
-      <h2>KVITTO</h2>
-      <p>Order-ID: {orderId}</p>
-      {cart.length === 0 ? (
-        <p>Varukorgen är tom</p>
-      ) : (
-        <ul>
-          {Object.keys(groupedItems).map((itemName) => (
-            <li key={itemName}>
-              {itemName} - {groupedItems[itemName].quantity} st -{" "}
-              {groupedItems[itemName].price} kr
-            </li>
-          ))}
-        </ul>
-      )}
-      <p>Summa: {totalSum} kr</p>
-      <button onClick={handleNewOrder}>Gör en ny beställning</button>
+    <div className="receipt-body">
+      <div className="receipt-content">
+        <div className="receipt-items-content">
+          <img src="assets/logo.png" alt="logo" width={42} />
+          <h2>KVITTO</h2>
+          <p>#{orderId}</p>
+          <ul>
+            {Object.keys(groupedItems).map((itemName) => (
+              <li key={itemName}>
+                <div>
+                  <h3>{itemName}</h3>
+                  <p>{groupedItems[itemName].quantity} stycken </p>
+                </div>
+                <div className="dots-dark" />
+                <h3>{groupedItems[itemName].price} SEK</h3>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="receipt-total-content">
+          <div className="">
+            <h3>TOTALT</h3>
+            <p>inkl 20% moms</p>
+          </div>
+          <h2 className="sum">{totalSum} SEK</h2>
+        </div>
+      </div>
+      <button className="order-button" onClick={handleNewOrder}>
+        GÖR EN NY BESTÄLLNING
+      </button>
     </div>
   );
 };

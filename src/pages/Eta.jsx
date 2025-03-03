@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useGetOrderByIdQuery } from "../store/apiSlice";
 import { useNavigate } from "react-router-dom";
 import { clearCart } from "../store/orderSlice";
+import "./pages.css";
 
 function Eta() {
   const tenant = useSelector((state) => state.order.tenant);
@@ -28,13 +29,22 @@ function Eta() {
     navigate("/receipt");
   };
 
+  const etaMinutes = new Date(eta);
+  let minutes = etaMinutes.getMinutes();
+
   return (
-    <div>
-      <h1>Orderstatus</h1>
-      <p>Order-ID: {orderId ?? "Ej tillgängligt"}</p>{" "}
-      <p>Uppskattad leveranstid: {eta ?? "Ej tillgängligt"}</p>{" "}
-      <button onClick={handleNewOrder}>Gör en ny beställning</button>
-      <button onClick={handleReceipt}>Se kvitto</button>
+    <div className="eta-body">
+      <div className="eta-content">
+        <img src="assets/box.png" className="wonton-img" />
+        <h1>DINA WONTONS TILLAGAS!</h1>
+        <p className="eta">ETA {minutes} MIN</p> <p>#{orderId}</p>{" "}
+        <button className="order-button" onClick={handleNewOrder}>
+          GÖR EN NY BESTÄLLNING
+        </button>
+        <button className="receipt-button" onClick={handleReceipt}>
+          SE KVITTO
+        </button>
+      </div>
     </div>
   );
 }

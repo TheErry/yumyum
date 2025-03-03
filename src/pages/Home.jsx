@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setTenant } from "../store/orderSlice";
+import "./pages.css";
 
 function Home() {
   const [tenant, setTenantName] = useState("");
@@ -10,28 +11,34 @@ function Home() {
 
   const handleConfirm = () => {
     if (tenant.trim()) {
-      dispatch(setTenant(tenant)); 
-      navigate("/menu"); 
+      dispatch(setTenant(tenant));
+      navigate("/menu");
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <h1 className="text-2xl font-bold mb-4">Välj ditt tenant-namn</h1>
-      <input
-        type="text"
-        value={tenant}
-        onChange={(e) => setTenantName(e.target.value)}
-        placeholder="Ange tenant-namn"
-        className="border p-2 rounded"
-      />
-      <button
-        onClick={handleConfirm}
-        className="mt-4 bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50"
-        disabled={!tenant.trim()}
-      >
-        Bekräfta
-      </button>
+    <div className="home-page-body">
+      <div className="home-page-content">
+        <h1 className="">VÄLKOMMEN TILL YUM YUM GIMME SUM!</h1>
+        <img src="assets/logo.png" width={168} height={202} />
+        <div className="text-input-div">
+          <p className="margin-bottom">VEM ÄR DET SOM BESTÄLLER?</p>
+          <input
+            type="text"
+            value={tenant}
+            onChange={(e) => setTenantName(e.target.value)}
+            placeholder="Ange ditt namn"
+            className="name-input"
+          />
+          <button
+            onClick={handleConfirm}
+            className="name-button"
+            disabled={!tenant.trim()}
+          >
+            Bekräfta
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

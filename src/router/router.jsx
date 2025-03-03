@@ -1,30 +1,30 @@
 import { createBrowserRouter } from "react-router-dom";
-import Home from "../pages/Home"
-import Menu from "../pages/Menu"
-import Order from "../pages/Order"
-import Eta from "../pages/Eta"
-import Receipt from "../pages/Receipt"
+import Home from "../pages/Home";
+import Menu from "../pages/Menu";
+import Order from "../pages/Order";
+import Eta from "../pages/Eta";
+import Receipt from "../pages/Receipt";
 
 const router = createBrowserRouter([
   {
-    path: "/home",
-    element: <Home />
+    path: "/",
+    element: <Home />,
   },
   {
     path: "/menu",
-    element: <Menu />
+    element: <Menu />,
   },
   {
     path: "/order",
-    element: <Order />
+    element: <Order />,
   },
   {
     path: "/eta",
-    element: <Eta />
+    element: <Eta />,
   },
   {
     path: "/receipt",
-    element: <Receipt />
+    element: <Receipt />,
   },
 ]);
 

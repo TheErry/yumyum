@@ -2,15 +2,16 @@ import { useGetMenuQuery } from "../store/apiSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { addItem } from "../store/orderSlice";
-import CartModal from "../components/CartModal";
+import { useNavigate } from "react-router-dom";
+import "./pages.css";
 
 function Menu() {
   const queryResult = useGetMenuQuery();
   const { data: menu, error, isLoading } = queryResult;
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.order.cart);
-  const [cartOpen, setCartOpen] = useState(false);
   const [selectedIngredient, setSelectedIngredient] = useState(null);
+  const navigate = useNavigate();
 
   if (isLoading) return <p>Laddar menyn...</p>;
   if (error) return <p>Kunde inte hämta menyn </p>;
@@ -38,41 +39,67 @@ function Menu() {
       )
     : menu.items;
 
+  const handleIngredientClick = (ingredient) => {
+    if (ingredient === selectedIngredient) {
+      setSelectedIngredient(null);
+    } else {
+      setSelectedIngredient(ingredient);
+    }
+  };
+
   return (
     <>
-      <div>
-        <h1>Menyn</h1>
-        <button onClick={() => setCartOpen(true)}>
-          🛒 Varukorg ({cart.length})
-        </button>
-        {cartOpen && <CartModal closeCart={() => setCartOpen(false)} />}
-        <ul>
-          {filteredMenu.map((item) => (
-            <li key={item.id}>
-              <h3>{item.name}</h3>
-              <p>{item.ingredients}</p>
-              <p>{item.type}</p>
-              <p>Pris: {item.price} kr</p>
-              <button onClick={() => handleAddToCart(item)}>+</button>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div>
-        <h3>Filtrera efter ingredienser:</h3>
-        {ingredientsList.map((ingredient) => (
-          <button
-            key={ingredient}
-            onClick={() => setSelectedIngredient(ingredient)}
-            style={{
-              backgroundColor:
-                selectedIngredient === ingredient ? "lightgreen" : "lightgray",
-            }}
-          >
-            {ingredient}
-          </button>
-        ))}
-        <button onClick={() => setSelectedIngredient(null)}>Visa alla</button>{" "}
+      <div className="home-page-body">
+        <div className="menu-content">
+          <h1>MENY</h1>
+          <div className="menu-list">
+            <div className="amount-background">
+              <p className="cart-amount">{cart.length}</p>
+            </div>
+            <div className="cart-container">
+              <button
+                className="cart-button"
+                onClick={() => navigate("/order")}
+              >
+                <img src="assets/cart.png" />
+              </button>
+            </div>
+            <ul>
+              {filteredMenu.map((item) => (
+                <li key={item.id}>
+                  <div className="list-item">
+                    <div className="list-top">
+                      <h3>{item.name}</h3>
+                      <div className="dots" />
+                      <h3>{item.price} kr</h3>
+                    </div>
+                    <p>
+                      {Array.isArray(item.ingredients)
+                        ? item.ingredients.join(", ")
+                        : ""}
+                    </p>
+                  </div>
+                  <button
+                    className="add-button"
+                    onClick={() => handleAddToCart(item)}
+                  >
+                    +
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="filter-buttons">
+            {ingredientsList.map((ingredient) => (
+              <button
+                key={ingredient}
+                onClick={() => handleIngredientClick(ingredient)}
+              >
+                {ingredient}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
     </>
   );

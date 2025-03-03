@@ -6,7 +6,16 @@ function App() {
 
   return (
     <main>
-      <h1>Hello</h1>
+      <div className='text-logo-container'>
+        <div className='text-logo-row'>
+          <p>Y</p>
+          <p>Y</p>
+        </div>
+        <div className='text-logo-row'>
+          <p>G</p>
+          <p>S</p>
+        </div>
+      </div>
       <RouterProvider router={router}/>
     </main>
   )
